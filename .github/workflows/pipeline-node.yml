@@ -1,0 +1,50 @@
+# name: Node Sample CI
+
+# on:
+#   push:
+#     branches:
+#       - main
+#     # paths:
+#     #   - 'tests/node-service/**'   # trigger only when files under node-service change
+#   workflow_dispatch:              # allow manual run
+
+# jobs:
+#   build-and-test:
+#     runs-on: ubuntu-latest
+#     # defaults:
+#     #   run:
+#     #     working-directory: tests/node-service   # 👈 sets the default directory
+
+#     steps:
+#       - uses: actions/checkout@v3
+
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
+
+#       - name: Install dependencies
+#         run: |
+#            pwd
+#            cd node-service
+#            npm install
+
+#       - name: Run Jest tests
+#         run: npx jest --ci --reporters=default --reporters=jest-junit
+#         env:
+#           JEST_JUNIT_OUTPUT: results/junit-results.xml
+
+#       - name: Run API tests with Newman
+#         run: npx newman run api/postman_collection.json -r cli,junit --reporter-junit-export results/postman-results.xml
+
+#       - name: Install Playwright deps
+#         run: npx playwright install --with-deps
+
+#       - name: Run Playwright tests
+#         run: npx playwright test --reporter=junit --output results/
+
+#       - name: Upload test results
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: node-service-results
+#           path: tests/node-service/results/

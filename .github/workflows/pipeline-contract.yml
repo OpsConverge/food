@@ -1,0 +1,65 @@
+# name: Contract Tests
+
+# on:
+#   push:
+#     branches:
+#       - main
+#     paths:
+#       - 'contract/**'
+#   workflow-dispatch:
+
+# jobs:
+#   consumer-tests:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
+
+#       - name: Install consumer dependencies
+#         run: |
+#           cd contract/consumer
+#           npm install
+
+#       - name: Run consumer tests and generate pacts
+#         run: |
+#           cd contract/consumer
+#           npm test
+
+#       - name: Upload consumer pact artifacts
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: consumer-pacts
+#           path: contract/consumer/pacts
+
+#   provider-tests:
+#     needs: consumer-tests
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+
+#       - name: Download consumer pacts
+#         uses: actions/download-artifact@v3
+#         with:
+#           name: consumer-pacts
+#           path: contract/provider/pacts
+
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
+
+#       - name: Install provider dependencies
+#         run: |
+#           cd contract/provider
+#           npm install
+
+#       - name: Run provider verification
+#         run: |
+#           cd contract/provider
+#           npm test
